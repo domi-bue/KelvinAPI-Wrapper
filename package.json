@@ -2,7 +2,26 @@
     "name": "kelvin-api-wrapper",
     "version": "0.0.1",
     "description": "A wrapper for the Kelvin API from UCS@School",
+    "license": "MIT",
+    "author": "domi-bue",
+    "keywords": [
+        "univention",
+        "ucs",
+        "school",
+        "kelvin-api"
+    ],
     "type": "module",
+    "main": "dist/index.js",
+    "types": "index.d.ts",
+    "files": [
+        "dist",
+        "index.d.ts"
+    ],
+    "packageManager": "pnpm@7.29.1",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/domi-bue/KelvinAPI-Wrapper.git"
+    },
     "scripts": {
         "build": "tsc",
         "lint": "eslint \"src/**/*.ts\"",
@@ -14,7 +33,9 @@
         "eslint": "^8.47.0",
         "eslint-plugin-simple-import-sort": "^10.0.0",
         "eslint-plugin-unused-imports": "^3.0.0",
-        "node-fetch": "^3.3.2",
         "typescript": "^5.1.6"
+    },
+    "dependencies": {
+        "node-fetch": "^3.3.2"
     }
 }
