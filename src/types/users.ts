@@ -16,9 +16,7 @@ export type UserTypes = {
     school_classes?: { [school: string]: string[] };
     workgroups?: { [school: string]: string[] };
     source_uid?: string;
-    udm_properties?: {
-        [property: string]: any
-    }
+    udm_properties?: { [property: string]: any };
 }
 
 export type CreateUserInput = Omit<UserTypes, "name" | "firstname" | "lastname" | "record_uid" | "roles" | "school" | "schools" | "source_uid"> & {

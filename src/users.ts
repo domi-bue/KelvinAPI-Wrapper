@@ -16,7 +16,7 @@ export default class UsersModule extends BaseModule {
 
     /**
      * Retrieve user information by providing the user's name.
-     * @param {string} name - The name of the user to retrieve information for
+     * @param {string} name - The name of the user to retrieve information for (case-insensitive)
      * @returns {Promise<UserTypes>} A Promise that resolves to a UserTypes object containing the user's information
      */
     public async get(name: string): Promise<UserTypes> {
@@ -28,7 +28,7 @@ export default class UsersModule extends BaseModule {
 
     /**
      * Search for users based on the provided search options.
-     * @param {UserTypes} searchOptions - The search criteria to filter the users
+     * @param {UserTypes} searchOptions - The search criteria to filter the users (supports wildcard, case-insensitive)
      * @returns {Promise<UserTypes | UserTypes[]>} A Promise that resolves to a single UserTypes object or an array of UserTypes objects
      */
     public async search(searchOptions: UserTypes): Promise<UserTypes | UserTypes[]> {
@@ -41,7 +41,7 @@ export default class UsersModule extends BaseModule {
     }
 
     /**
-     * Create a new user with the provided attributes
+     * Create a new user with the provided attributes.
      * @param {CreateUserInput} user - The user object containing the attributes of the new user
      * @returns {Promise<UserTypes>} A Promise that resolves to the created UserTypes object
      */

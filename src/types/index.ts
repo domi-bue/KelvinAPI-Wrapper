@@ -1,3 +1,4 @@
+import { ClassTypes, ModifyClassInput } from "./classes.js";
 import { CreateUserInput, UserTypes } from "./users.js";
 
-export { CreateUserInput, UserTypes };
+export { ClassTypes, CreateUserInput, ModifyClassInput, UserTypes };
