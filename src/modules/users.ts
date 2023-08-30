@@ -1,5 +1,5 @@
+import { CreateUserInput, UserTypes } from "../types/index.js";
 import BaseModule from "./baseModule.js";
-import { CreateUserInput, UserTypes } from "./types/index.js";
 
 
 export default class UsersModule extends BaseModule {

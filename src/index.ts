@@ -1,7 +1,8 @@
 import fetch, { RequestInit, Response } from "node-fetch";
 
-import ClassesModule from "./classes.js";
-import UsersModule from "./users.js";
+import ClassesModule from "./modules/classes.js";
+import SchoolsModule from "./modules/schools.js";
+import UsersModule from "./modules/users.js";
 
 type ClassOptions = {
     FQDN: string;
@@ -19,6 +20,7 @@ export default class KelvinAPI {
     public token: string;
 
     public Classes: ClassesModule;
+    public Schools: SchoolsModule;
     public Users: UsersModule;
 
     constructor(options: ClassOptions) {
@@ -61,10 +63,12 @@ export default class KelvinAPI {
             this.Users = new UsersModule({ promise: tokenPromise });
             tokenPromise.then(() => {
                 this.Classes.fetch = fetchWithAuthorization;
+                this.Schools.fetch = fetchWithAuthorization;
                 this.Users.fetch = fetchWithAuthorization;
             });
         } else {
             this.Classes = new ClassesModule({ fetch: fetchWithAuthorization });
+            this.Schools = new SchoolsModule({ fetch: fetchWithAuthorization });
             this.Users = new UsersModule({ fetch: fetchWithAuthorization });
         }
     }

@@ -1,5 +1,5 @@
+import { ClassTypes, ModifyClassInput } from "../types/index.js";
 import BaseModule from "./baseModule.js";
-import { ClassTypes, ModifyClassInput } from "./types/index.js";
 
 
 export default class ClassesModule extends BaseModule {

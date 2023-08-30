@@ -1,6 +1,6 @@
 export type ClassTypes = {
     dn?: string;
-    url?: string;
+    url?: URL;
     ucsschool_roles?: string[];
     udm_properties?: { [property: string]: any };
     name?: string;
