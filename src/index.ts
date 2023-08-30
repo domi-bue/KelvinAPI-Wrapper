@@ -62,6 +62,9 @@ export default class KelvinAPI {
         };
 
         if (tokenPromise) {
+            this.Classes = new ClassesModule({ promise: tokenPromise });
+            this.Roles = new RolesModule({ promise: tokenPromise });
+            this.Schools = new SchoolsModule({ promise: tokenPromise });
             this.Users = new UsersModule({ promise: tokenPromise });
             tokenPromise.then(() => {
                 this.Classes.fetch = fetchWithAuthorization;
