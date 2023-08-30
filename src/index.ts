@@ -4,6 +4,7 @@ import ClassesModule from "./modules/classes.js";
 import RolesModule from "./modules/roles.js";
 import SchoolsModule from "./modules/schools.js";
 import UsersModule from "./modules/users.js";
+import workgroupsModule from "./modules/workgroups.js";
 
 type ClassOptions = {
     FQDN: string;
@@ -24,6 +25,7 @@ export default class KelvinAPI {
     public Roles: RolesModule;
     public Schools: SchoolsModule;
     public Users: UsersModule;
+    public Workgroups: workgroupsModule;
 
     constructor(options: ClassOptions) {
         this.FQDN = options.FQDN.replace(/(?:https?:\/\/)?(.*?)(\/|$)/g, "$1");
@@ -66,17 +68,20 @@ export default class KelvinAPI {
             this.Roles = new RolesModule({ promise: tokenPromise });
             this.Schools = new SchoolsModule({ promise: tokenPromise });
             this.Users = new UsersModule({ promise: tokenPromise });
+            this.Workgroups = new workgroupsModule({ promise: tokenPromise });
             tokenPromise.then(() => {
                 this.Classes.fetch = fetchWithAuthorization;
                 this.Roles.fetch = fetchWithAuthorization;
                 this.Schools.fetch = fetchWithAuthorization;
                 this.Users.fetch = fetchWithAuthorization;
+                this.Workgroups.fetch = fetchWithAuthorization;
             });
         } else {
             this.Classes = new ClassesModule({ fetch: fetchWithAuthorization });
             this.Roles = new RolesModule({ fetch: fetchWithAuthorization });
             this.Schools = new SchoolsModule({ fetch: fetchWithAuthorization });
             this.Users = new UsersModule({ fetch: fetchWithAuthorization });
+            this.Workgroups = new workgroupsModule({ fetch: fetchWithAuthorization });
         }
     }
 }
