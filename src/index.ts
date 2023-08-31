@@ -1,3 +1,4 @@
+import https from "https";
 import fetch, { RequestInit, Response } from "node-fetch";
 
 import ClassesModule from "./modules/classes.js";
@@ -6,20 +7,30 @@ import SchoolsModule from "./modules/schools.js";
 import UsersModule from "./modules/users.js";
 import workgroupsModule from "./modules/workgroups.js";
 
-type ClassOptions = {
+/**
+ * Options for configuring the KelvinAPI class.
+ * @property {(FQDN: string, user: string, password: string) | (FQDN: string, token: string)} - The authentication options.
+ * @property {boolean} [USE_SSL] - Whether to use SSL (default is determined based on the protocol in FQDN or if not specified `true`).
+ * @property {boolean} [IGNORE_TLS_REJECT_UNAUTHORIZED] - Whether to ignore TLS certificate verification. (default is `false`).
+ */
+type ClassOptions = ({
     FQDN: string;
     user: string;
     password: string;
 } | {
     FQDN: string;
     token: string;
+}) & {
+    USE_SSL?: boolean;
+    IGNORE_TLS_REJECT_UNAUTHORIZED?: boolean;
 };
 
 export default class KelvinAPI {
-    private USE_SSL: boolean = process.env.USE_SSL.toLowerCase().trim() === "true";
-    public FQDN: string;
-    public URL: string;
-    public token: string;
+    private USE_SSL: boolean;
+    private FQDN: string;
+    private URL: string;
+    private token: string;
+    private agent: https.Agent;
 
     public Classes: ClassesModule;
     public Roles: RolesModule;
@@ -28,8 +39,17 @@ export default class KelvinAPI {
     public Workgroups: workgroupsModule;
 
     constructor(options: ClassOptions) {
+        this.USE_SSL =
+            options.USE_SSL !== undefined
+                ? options.USE_SSL
+                : options.FQDN.startsWith("https://")
+                    ? true
+                    : !options.FQDN.startsWith("http://");
         this.FQDN = options.FQDN.replace(/(?:https?:\/\/)?(.*?)(\/|$)/g, "$1");
         this.URL = `http${this.USE_SSL ? "s" : ""}://${this.FQDN}`;
+        this.agent = new https.Agent({
+            rejectUnauthorized: options.IGNORE_TLS_REJECT_UNAUTHORIZED !== true
+        });
 
         let tokenPromise: Promise<any>;
         if ("token" in options) this.token = options.token;
@@ -42,6 +62,7 @@ export default class KelvinAPI {
             tokenPromise = fetch(`${this.URL}/ucsschool/kelvin/token`, {
                 method: "POST",
                 body: formData,
+                agent: this.agent
             })
                 .then(res => res.json() as any)
                 .then(({ access_token }) => {
@@ -56,7 +77,8 @@ export default class KelvinAPI {
                 headers: {
                     ...options.headers,
                     "Authorization": `Bearer ${this.token}`
-                }
+                },
+                agent: this.agent
             };
 
             const fullURL = `${this.URL}${route.startsWith("/") ? route : `/${route}`}`;
