@@ -47,7 +47,7 @@ export default class KelvinAPI {
                     : !options.FQDN.startsWith("http://");
         this.FQDN = options.FQDN.replace(/(?:https?:\/\/)?(.*?)(\/|$)/g, "$1");
         this.URL = `http${this.USE_SSL ? "s" : ""}://${this.FQDN}`;
-        this.agent = new https.Agent({
+        if (this.USE_SSL) this.agent = new https.Agent({
             rejectUnauthorized: options.IGNORE_TLS_REJECT_UNAUTHORIZED !== true
         });
 
@@ -76,6 +76,7 @@ export default class KelvinAPI {
                 ...options,
                 headers: {
                     ...options.headers,
+                    ...(options.body ? { "Content-Type": "application/json" } : {}),
                     "Authorization": `Bearer ${this.token}`
                 },
                 agent: this.agent
