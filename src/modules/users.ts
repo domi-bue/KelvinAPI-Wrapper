@@ -64,7 +64,7 @@ export default class UsersModule extends BaseModule {
     public async update(name: string, user: UserTypes & { password?: string }): Promise<UserTypes> {
         await this.waitForFetch();
         const resp = await this.fetch(`/ucsschool/kelvin/v1/users/${name}`, {
-            method: "PUT",
+            method: "PATCH",
             body: JSON.stringify(user)
         });
         const data = await resp.json() as UserTypes;
@@ -80,7 +80,7 @@ export default class UsersModule extends BaseModule {
     public async modify(name: string, user: CreateUserInput): Promise<UserTypes> {
         await this.waitForFetch();
         const resp = await this.fetch(`/ucsschool/kelvin/v1/users/${name}`, {
-            method: "PATCH",
+            method: "PUT",
             body: JSON.stringify(user)
         });
         const data = await resp.json() as UserTypes;
