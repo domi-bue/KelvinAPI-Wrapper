@@ -31,6 +31,18 @@ api.Users.getAll()
 - **Streamlined Endpoint Interaction:** Easily interact with various API endpoints without dealing with low-level implementation details.
 - **TypeScript Support:** Enjoy a seamless development experience with built-in TypeScript type definitions for enhanced code quality and development productivity.
 
+## Code of Conduct
+
+We expect all contributors to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md) to maintain a respectful and inclusive environment.
+
+## Contributing
+
+Interested in contributing to Kelvin API Wrapper? Please read our [Contribution Guidelines](CONTRIBUTING.md) for information on how to get started.
+
+## Security
+
+We take security seriously at Kelvin API Wrapper. If you discover a security vulnerability, please follow our [security policy](SECURITY.md) to report it responsibly.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
