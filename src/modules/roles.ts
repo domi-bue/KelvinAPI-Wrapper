@@ -21,7 +21,7 @@ export default class RolesModule extends BaseModule {
      */
     public async get(name: string): Promise<RoleTypes> {
         await this.waitForFetch();
-        const resp = await this.fetch(`/ucsrole/kelvin/v1/roles/${name}`);
+        const resp = await this.fetch(`/ucsrole/kelvin/v1/roles/${encodeURIComponent(name)}`);
         const data = await resp.json() as RoleTypes;
         return data;
     }

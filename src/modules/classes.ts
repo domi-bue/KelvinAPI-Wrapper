@@ -10,7 +10,7 @@ export default class ClassesModule extends BaseModule {
      */
     public async getAll(school: string): Promise<ClassTypes[]> {
         await this.waitForFetch();
-        const resp = await this.fetch(`/ucsschool/kelvin/v1/classes/?school=${school}`);
+        const resp = await this.fetch(`/ucsschool/kelvin/v1/classes/?school=${encodeURIComponent(school)}`);
         const data = await resp.json() as ClassTypes[];
         return data;
     }
@@ -23,7 +23,7 @@ export default class ClassesModule extends BaseModule {
      */
     public async get(school: string, className: string): Promise<ClassTypes> {
         await this.waitForFetch();
-        const resp = await this.fetch(`/ucsschool/kelvin/v1/classes/${school}/${className}`);
+        const resp = await this.fetch(`/ucsschool/kelvin/v1/classes/${encodeURIComponent(school)}/${encodeURIComponent(className)}`);
         const data = await resp.json() as ClassTypes;
         return data;
     }
@@ -36,7 +36,7 @@ export default class ClassesModule extends BaseModule {
      */
     public async search(school: string, query: string): Promise<ClassTypes | ClassTypes[]> {
         await this.waitForFetch();
-        const resp = await this.fetch(`/ucsschool/kelvin/v1/classes/?school=${school}&name=${query}`);
+        const resp = await this.fetch(`/ucsschool/kelvin/v1/classes/?school=${encodeURIComponent(school)}&name=${encodeURIComponent(query)}`);
         const data = await resp.json() as ClassTypes | ClassTypes[];
         return data;
     }
@@ -65,7 +65,7 @@ export default class ClassesModule extends BaseModule {
      */
     public async modify(school: string, className: string, _class: ModifyClassInput): Promise<ClassTypes> {
         await this.waitForFetch();
-        const resp = await this.fetch(`/ucsschool/kelvin/v1/classes/${school}/${className}`, {
+        const resp = await this.fetch(`/ucsschool/kelvin/v1/classes/${encodeURIComponent(school)}/${encodeURIComponent(className)}`, {
             method: "PATCH",
             body: JSON.stringify(_class)
         });
@@ -81,7 +81,7 @@ export default class ClassesModule extends BaseModule {
      */
     public async delete(school: string, className: string): Promise<void> {
         await this.waitForFetch();
-        await this.fetch(`/ucsschool/kelvin/v1/classes/${school}/${className}`, {
+        await this.fetch(`/ucsschool/kelvin/v1/classes/${encodeURIComponent(school)}/${encodeURIComponent(className)}`, {
             method: "DELETE"
         });
     }

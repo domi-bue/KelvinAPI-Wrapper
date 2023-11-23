@@ -21,7 +21,7 @@ export default class UsersModule extends BaseModule {
      */
     public async get(name: string): Promise<UserTypes> {
         await this.waitForFetch();
-        const resp = await this.fetch(`/ucsschool/kelvin/v1/users/${name}`);
+        const resp = await this.fetch(`/ucsschool/kelvin/v1/users/${encodeURIComponent(name)}`);
         const data = await resp.json() as UserTypes;
         return data;
     }
@@ -63,7 +63,7 @@ export default class UsersModule extends BaseModule {
      */
     public async update(name: string, user: UserTypes & { password?: string }): Promise<UserTypes> {
         await this.waitForFetch();
-        const resp = await this.fetch(`/ucsschool/kelvin/v1/users/${name}`, {
+        const resp = await this.fetch(`/ucsschool/kelvin/v1/users/${encodeURIComponent(name)}`, {
             method: "PATCH",
             body: JSON.stringify(user)
         });
@@ -79,7 +79,7 @@ export default class UsersModule extends BaseModule {
      */
     public async modify(name: string, user: CreateUserInput): Promise<UserTypes> {
         await this.waitForFetch();
-        const resp = await this.fetch(`/ucsschool/kelvin/v1/users/${name}`, {
+        const resp = await this.fetch(`/ucsschool/kelvin/v1/users/${encodeURIComponent(name)}`, {
             method: "PUT",
             body: JSON.stringify(user)
         });
@@ -94,7 +94,7 @@ export default class UsersModule extends BaseModule {
      */
     public async delete(name: string): Promise<void> {
         await this.waitForFetch();
-        await this.fetch(`/ucsschool/kelvin/v1/users/${name}`, {
+        await this.fetch(`/ucsschool/kelvin/v1/users/${encodeURIComponent(name)}`, {
             method: "DELETE"
         });
     }

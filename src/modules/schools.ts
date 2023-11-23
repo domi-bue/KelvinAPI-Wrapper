@@ -21,7 +21,7 @@ export default class SchoolsModule extends BaseModule {
      */
     public async get(name: string): Promise<SchoolTypes> {
         await this.waitForFetch();
-        const resp = await this.fetch(`/ucsschool/kelvin/v1/schools/${name}`);
+        const resp = await this.fetch(`/ucsschool/kelvin/v1/schools/${encodeURIComponent(name)}`);
         const data = await resp.json() as SchoolTypes;
         return data;
     }

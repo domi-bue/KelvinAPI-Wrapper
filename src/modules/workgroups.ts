@@ -21,7 +21,7 @@ export default class workgroupsModule extends BaseModule {
      */
     public async get(name: string): Promise<WorkgroupTypes> {
         await this.waitForFetch();
-        const resp = await this.fetch(`/ucsschool/kelvin/v1/workgroups/${name}`);
+        const resp = await this.fetch(`/ucsschool/kelvin/v1/workgroups/${encodeURIComponent(name)}`);
         const data = await resp.json() as WorkgroupTypes;
         return data;
     }
@@ -63,7 +63,7 @@ export default class workgroupsModule extends BaseModule {
      */
     public async modify(name: string, workgroup: ModifyWorkgroupInput): Promise<WorkgroupTypes> {
         await this.waitForFetch();
-        const resp = await this.fetch(`/ucsschool/kelvin/v1/workgroups/${name}`, {
+        const resp = await this.fetch(`/ucsschool/kelvin/v1/workgroups/${encodeURIComponent(name)}`, {
             method: "PATCH",
             body: JSON.stringify(workgroup)
         });
@@ -78,7 +78,7 @@ export default class workgroupsModule extends BaseModule {
      */
     public async delete(name: string): Promise<void> {
         await this.waitForFetch();
-        await this.fetch(`/ucsschool/kelvin/v1/workgroups/${name}`, {
+        await this.fetch(`/ucsschool/kelvin/v1/workgroups/${encodeURIComponent(name)}`, {
             method: "DELETE"
         });
     }
